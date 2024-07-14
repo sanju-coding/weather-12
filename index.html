@@ -2,28 +2,656 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Check Your City Weather</title>
-    <link rel="stylesheet" href="weatherpro/index.css">
+    <title>Restaurant Website</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome Cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Awesome Cdn -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+<style>
+  /* Header styles */
+.header {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    font-size: 20px; /* Adjust font size here */
+}
+
+.header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    font-size: inherit; /* Inherit font size from parent (.header) */
+    font-weight: bold;
+}
+
+.links {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+}
+
+.links li {
+    margin-right: 20px;
+}
+
+.links li a {
+    color: white;
+    text-decoration: none;
+    font-size: inherit; /* Inherit font size from parent (.header) */
+}
+
+
+/* Search box */
+.search-box {
+    display: none;
+}
+
+/* Media queries for responsive design */
+@media screen and (max-width: 768px) {
+    .links {
+        display: none;
+    }
+
+    .search-box {
+        display: block;
+    }
+}
+/* Define animation keyframes */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply animation to menu items */
+.menu-content .img-content {
+    animation: slideIn 0.5s ease-in-out forwards;
+}
+
+/* Adjust animation delay for each menu item */
+.menu-content .img-content:nth-child(odd) {
+    animation-delay: 0.2s; /* Adjust delay for stagger effect */
+}
+
+.menu-content .img-content:nth-child(even) {
+    animation-delay: 0.4s; /* Adjust delay for stagger effect */
+}
+
+/* Additional styling for menu section */
+.menu {
+    padding: 50px 0;
+    background-color: #f9f9f9;
+}
+
+.menu h2 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 30px;
+    text-transform: capitalize;
+}
+
+.menu-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.img-content {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.img-content img {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.img-content h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+}
+.img-content {
+    animation: slideIn 0.5s ease-in-out forwards;
+}
+
+/* Adjust animation delay for each menu item */
+.img-content:nth-child(odd) {
+    animation-delay: 0.2s;
+}
+
+.img-content:nth-child(even) {
+    animation-delay: 0.4s;
+}
+
+/* Additional styling for menu section */
+.menu {
+    padding: 50px 0;
+    background-color: #f9f9f9;
+}
+
+.menu h2 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 30px;
+    text-transform: capitalize;
+}
+
+.menu-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.img-content {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.img-content img {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.img-content h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+}
+/* Define animation keyframes */
+@keyframes zoomIn {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.1);
+    }
+}
+
+/* Apply animation to menu items on hover */
+.img-content:hover {
+    animation: zoomIn 0.5s ease-in-out forwards;
+}
+/* Apply animation to menu items and dish cards on hover */
+.img-content:hover,
+.card-body:hover {
+    animation: zoomIn 0.5s ease-in-out forwards;
+}
+/* Apply animation to menu items and dish cards on hover */
+.img-content:hover img,
+.card-body:hover img {
+    animation: zoomIn 0.5s ease-in-out forwards;
+}
+/* Apply animation to menu items, dish cards, and card content images on hover */
+.img-content:hover img,
+.card-body:hover img,
+.card-content img:hover {
+    animation: zoomIn 0.5s ease-in-out forwards;
+}
+
+
+
+
+
+
+
+
+</style>
 </head>
 <body>
-    <div class="container">
-        <section class="main">
-            <section class="inputs">
-                <input type="text" placeholder="Enter Your City Name..." id="cityinput">
-                <input type="submit" id="submit" value="Submit">
-            </section>
-            <section class="display">
-                <div class="wrapper">
-                    <h2 id="cityoutput"></h2>
-                    <p id="description"></p>
-                    <p id="wind"></p>
-                    <p id="temp"></p>
+    
 
-                </div>
-            </section>
-        </section>
+    <!-- Header Start -->
+    <div class="header">
+       <nav>
+            <!-- <input type="checkbox" id="show-search">
+            <input type="checkbox" id="show-menu"> -->
+            <label for="show-menu" class="menu-icon"><i class="fas fa-bars"></i></label>
+            <div class="content">
+                <div class="logo">
+                    <i><a href="index.html" style="display: inline-block;">FlavorFusion</a></i></div>
+
+               <center> <ul class="links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#dishes">Dishes</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#order">Order</a></li>
+                    <li><a href="#reviews">Reviews</a></li>
+                </ul></center>
+            </div>
+            <label for="show-search" class="search-icon"><i class="fas fa-search"></i></label>
+            <form action="#" class="search-box">
+                <input type="text" placeholder="Type Something to search..." required>
+                <button type="submit" class="go-icon"><i class="fas fa-long-arrow-alt-right"></i></button>
+            </form>
+        </nav>
     </div>
-    <script src="weatherpro/index.js"></script>
+    <!-- Header End -->
+
+
+
+
+
+
+    <!-- Home Section Start -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Welcome To Our Restaurant</h3>
+            <h2>Eat Fresh & Healthy Foo<span>d</span></h2>
+            <p><strong>Get ready to fall in love with flavor!</strong></p>
+            <button id="btn">Order Now</button>
+        </div>
+        <div class="img">
+            <img src="./images/background-img.png" alt="">
+        </div>
+    </section>
+    <!-- Home Section End -->
+
+
+
+    <!-- Top Card Start -->
+    <section class="top-cards">
+        <div class="top-cards-content">
+            <div class="row">
+                <img src="./images/top-image1.png" alt="">
+                <div class="layer">
+                    <h3>Food</h3>
+                    <p>"Delight in our exquisite cuisine, leave you craving for more. Experience culinary excellence like never before at FlavorFusion"</p>
+                    <button>Order Now</button>
+                </div>
+            </div>
+            <div class="row">
+                <img src="./images/top-image2.png" alt="">
+                <div class="layer">
+                    <h3>Burger</h3>
+                    <p>"Bite into satisfaction. Our burgers are crafted with care to satisfy your cravings and elevate your dining experience. Taste perfection today!"</p>
+                    <button>Order Now</button>
+                </div>
+            </div>
+            <div class="row">
+                <img src="./images/top-image3.png" alt="">
+                <div class="layer">
+                    <h3>Fast Food</h3>
+                    <p>"Savor quick bites with our delectable fast food. Enjoy flavor-packed meals on the go, crafted for your convenience and satisfaction."</p>
+                    <button>Order Now</button>
+                </div>
+            </div>
+            <div class="row">
+                <img src="./images/top-image4.png" alt="">
+                <div class="layer">
+                    <h3>Pizza</h3>
+                    <p>
+                        "Savor slices of heaven. Our pizzas are a symphony of flavors, crafted with passion to ignite your senses and satisfy cravings."</p>
+                    <button>Order Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Top Card End -->
+
+
+
+
+
+
+    <!-- Dishes Section Start -->
+    <section class="dishes" id="dishes">
+        <div class="main-text">
+            <center><h2><span>D</span>ishes</h2></center>
+        </div>
+        <div class="card-content">
+            <div class="row">
+                <img src="./images/chicken chow.png" alt="">
+                <div class="card-body">
+                    <h3>Chicken Chow</h3>
+                    <div class="rating">
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                    </div>
+                    
+                    <p>"Chow down on perfection with our Chicken Chow!"</p>
+                    <div class="price">Price <strong>Rs120</strong></div>
+
+                    <button>Order Now</button>
+                </div>
+            </div>
+            <div class="row">
+                <img src="./images/steaks vagitable.png" alt="">
+                <div class="card-body">
+                    <h3>Steaks Vagetable</h3>
+                    <div class="rating">
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                    </div>
+                    <p>"Savor the goodness of our Veggie Steaks!"</p>
+                    <div class="price">Price <strong>Rs90</strong></div>
+
+                    <button>Order Now</button>
+                </div>
+            </div>
+            <div class="row">
+                <img src="./images/grilled chicken.png" alt="">
+                <div class="card-body">
+                    <h3>Grilled Chicken</h3>
+                    <div class="rating">
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                    </div>
+                    <p>"Fire up your taste buds with our Grilled Chicken delight!"</p>
+                    <div class="price">Price <strong>Rs50</strong></div>
+
+                    <button>Order Now</button>
+                </div>
+            </div>
+           
+
+            
+
+
+
+            <div class="row">
+                <img src="./images/pasta.png" alt="">
+                <div class="card-body">
+                    <h3>Pasta</h3>
+                    <div class="rating">
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                    </div>
+                    
+                    <p>
+                        "Twirl into delight with our Pasta specialties!"</p>
+                    <div class="price">Price <strong>Rs30</strong></div>
+
+                    <button>Order Now</button>
+                </div>
+            </div>
+            <div class="row">
+                <img src="./images/noodles.png" alt="">
+                <div class="card-body">
+                    <h3>Noodles</h3>
+                    <div class="rating">
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                       
+                    </div>
+                    <p>"Slurp up happiness with our Noodles!"</p>
+                    <div class="price">Price <strong>Rs60</strong></div>
+
+                    <button>Order Now</button>
+                </div>
+            </div>
+            <div class="row">
+                <img src="./images/chicken.png" alt="">
+                <div class="card-body">
+                    <h3>Chicken</h3>
+                    <div class="rating">
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                        <i class="fa-solid fa-star checked"></i>
+                    </div>
+                    <p>"Delight in every bite with our succulent Chicken!"</p>
+                    <div class="price">Price <strong>Rs150</strong></div>
+
+                    <button>Order Now</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- Dishes Section End -->
+    
+ <!-- Section Menu Start -->
+ <center><h2 id="menu-text">Our <span>Menu</span></h2></center>
+ <section class="menu" id="menu">
+    <div class="menu-content">
+        <div class="img-content">
+            <img src="./images/m1.png" alt="">
+            <h3>Special dish </h3>
+        </div>
+        <div class="img-content">
+            <img src="./images/m2.png" alt="">
+            <h3>Salad</h3>
+        </div>
+        <div class="img-content">
+            <img src="./images/m3.png" alt="">
+            <h3>slide crisp</h3>
+        </div>
+    </div>
+
+    <div class="menu-img">
+        <img src="./images/menu-img.png" alt="">
+    </div>
+
+    <div class="menu-content">
+        <div class="img-content">
+            <img src="./images/m4.png" alt="">
+            <h3>Healthy salad</h3>
+        </div>
+        <div class="img-content">
+            <img src="./images/m5.png" alt="">
+            <h3>Tandoor </h3>
+        </div>
+        <div class="img-content">
+            <img src="./images/pasta.png" alt="">
+            <h3>Noodles mix</h3>
+        </div>
+    </div>
+ </section>
+ <!-- Section Menu End -->
+
+
+
+
+
+
+
+<!-- About Section Start -->
+<section class="about" id="about">
+    <div class="about-img">
+        <img src="./images/about-img.png" alt="">
+    </div>
+    <div class="about-text">
+        <h3>What We Make Spicy?</h3>
+        <i><p>"Discover our spicy creations at FlavorFusion, where every dish is infused with bold flavors and tantalizing spices. From zesty sauces to sizzling entrees, our menu offers a diverse selection to satisfy every palate. Get ready to spice up your dining experience with us!"</p></i><br><br>
+
+
+        <a href="https://iamafoodblog.com/" id="about-btn">Read More...</a>
+    </div>
+</section>
+<!-- About Section End -->
+
+
+
+
+
+
+
+<!-- Order Section Start -->
+<section class="order" id="order">
+    <div class="order-text">
+        <center><h2 id="menu-text">Order Your Dishe</h2></center><br>
+        <p>"Explore our 'Order Your Dish' feature for a seamless dining experience. Choose from our delicious menu, customize your order, and enjoy prompt delivery to your doorstep.<br>Indulge in your favorite dishes hassle-free, right from the comfort of home. Order now for a taste of culinary convenience!"</p><br>
+        <i><h4>
+            "Indulge in flavors that elevate your palate and enhance your taste experience."</h4></i><br>
+        <div class="list"><br>
+            <li>920000000000000</a></li>
+            <li>example@gmail.com</a></li>
+            <li>Pakistan Sindh Karachi</a></li>
+            <div class="service">
+                Free Dilevery</a>
+                Esay Payment</a>
+             24 Houre Services</a>
+            </div>
+        </div>
+    </div><span></span><span></span>
+    <div class="order-form">
+        <form action="#">
+            <input type="text" placeholder="Name" required>
+            <input type="number" placeholder="Phone Number" required>
+            <input type="text" placeholder="Your Order" required>
+            <input type="text" placeholder="How Much" required>
+            <textarea name="" id="" cols="35" rows="10" placeholder="Address" required></textarea>
+            <input type="submit" value="Order Now" class="submit" required>
+        </form>
+    </div>
+    
+</section>
+<!-- Order Section End -->
+
+
+
+
+
+<!-- Resviews Start -->
+
+<div class="reviews" id="reviews">
+    <div class="main-text">
+        <center><h2>Customers <span>Review</span></h2></center><br>
+    </div>
+    <div class="review-content">
+        <div class="box">
+            <div class="img">
+                <img src="./images/pic-1.png" alt="">
+            </div>
+            <h3>Elon Musk</h3>
+            <div class="rating">
+                <i class="fa-solid fa-star checked"></i>
+                <i class="fa-solid fa-star checked"></i>
+                <i class="fa-solid fa-star checked"></i>
+                <i class="fa-solid fa-star checked"></i>
+                <i class="fa-solid fa-star checked"></i>
+            </div>
+            <p>"Discover what our customers love most. Read authentic reviews and join the conversation about our exceptional dining experience."</p>
+        </div>
+        <div class="box">
+            <div class="img">
+                <img src="./images/pic-2.png" alt="">
+            </div>
+            <h3>Davit Jone</h3>
+            <div class="rating">
+                <i class="fa-solid fa-star checked"></i>
+                <i class="fa-solid fa-star checked"></i>
+                <i class="fa-solid fa-star checked"></i>
+                <i class="fa-solid fa-star checked"></i>
+                <i class="fa-solid fa-star checked"></i>
+            </div>
+            <p>"Voices of satisfaction. Discover what our customers have to say about their dining experience. Read our glowing reviews today!"</p>
+        </div>
+        <div class="box">
+            <div class="img">
+                <img src="./images/pic-3.png" alt="">
+            </div>
+            <h3>Jake Wake</h3>
+            <div class="rating">
+                <i class="fa-solid fa-star checked"></i>
+                <i class="fa-solid fa-star checked"></i>
+                <i class="fa-solid fa-star checked"></i>
+                <i class="fa-solid fa-star checked"></i>
+                <i class="fa-solid fa-star checked"></i>
+            </div>
+            <p>"Discover the voices of satisfaction. Our customers share their experiences, reflecting the excellence we deliver with each dish and service."</p>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Resviews End -->
+
+
+
+
+
+
+<!-- Footer Start -->
+<footer id="footer">
+    <div class="footer-content">
+        <div class="logo">
+            <h3>FOO<span>D</span></h3>
+            <br>
+        </div>
+
+        <p>"Learn about our journey, passion, and commitment to serving you the finest culinary delights. Discover the story behind <strong><i>FlavorFusion</i></strong> and our dedication to culinary excellence."</p>
+        <p> Learn about our journey, values, and commitment to delivering exceptional culinary experiences that bring people together through the love of food."</p><br>
+        <div class="socail-links">
+            <i class="fa-brands fa-twitter"></i>
+            <i class="fa-brands fa-facebook-f"></i>
+            <i class="fa-brands fa-instagram"></i>
+            <i class="fa-brands fa-youtube"></i>
+            <i class="fa-brands fa-pinterest-p"></i>
+        </div><br>
+
+    </div><br>
+    <hr>
+    <div class="footer-bottom-content">
+        <br>
+        <div class="copyright">
+            <p>&copy; Copyright  . All Rights Reserved</p>
+        </div>
+    </div>
+</footer>
+<!-- Footer End -->
+
+<a href="#" class="arrow"><i><img src="./images/up-arrow.png" alt="Back to Top" width="50px"></i></a>
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
